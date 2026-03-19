@@ -284,14 +284,12 @@ async def zayavka_handler(message: Message):
 
 @bot.on.message(text="📬 Кинуть заявку на А/П")
 async def send_ap_request(message: Message):
-    print(f"Нажата кнопка: {message.text}")
     if message.from_id != message.peer_id:
         return
-    # остальной код
     
     await message.answer(
         "📬 **Подача заявки на А/П**\n\n"
-        "🔗 Ссылка для подачи заявки:\n"
+        "🔗 **Ссылка для подачи заявки:**\n"
         "https://forum.blackrussia.online/forums/Агенты-поддержки.3283/\n\n"
         "📌 **Важно!**\n"
         "• Заявки могут быть закрыты в любой момент\n"
