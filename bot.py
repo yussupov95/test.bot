@@ -284,9 +284,7 @@ async def zayavka_handler(message: Message):
 
 @bot.on.message(text="📬 Кинуть заявку на А/П")
 async def send_ap_request(message: Message):
-    if message.from_id != message.peer_id:
-        return
-    await message.answer("✅ Тест работает! Кнопка нажата.")
+    await message.answer("✅ Работает")
 
 if __name__ == "__main__":
     print("✅ Бот запущен")
