@@ -17,9 +17,11 @@ def get_main_menu():
     keyboard = Keyboard(one_time=False, inline=False)
     keyboard.add(Text("📝 Заявка на К/А"), color=KeyboardButtonColor.PRIMARY)
     keyboard.row()
-    keyboard.add(Text("📚 Что учить для К/А"), color=KeyboardButtonColor.SECONDARY)
+    keyboard.add(Text("📚 Что учить для А/П"), color=KeyboardButtonColor.SECONDARY)
     keyboard.row()
     keyboard.add(Text("📋 Руководство А/П"), color=KeyboardButtonColor.SECONDARY)
+    keyboard.row()
+    keyboard.add(Text("📬 Кинуть заявку на А/П"), color=KeyboardButtonColor.PRIMARY)
     return keyboard
 
 def get_study_menu():
@@ -48,12 +50,12 @@ async def start_handler(message: Message):
         keyboard=get_main_menu()
     )
 
-@bot.on.message(text="📚 Что учить для К/А")
+@bot.on.message(text="📚 Что учить для А/П")
 async def study_menu_handler(message: Message):
     if message.from_id != message.peer_id:
         return
     await message.answer(
-        "📚 **Что нужно учить для К/А**\n\n"
+        "📚 **Что нужно учить для А/П**\n\n"
         "Выберите раздел:",
         keyboard=get_study_menu()
     )
@@ -279,6 +281,23 @@ async def zayavka_handler(message: Message):
         )
         
         del user_data[user_id]
+
+@bot.on.message(text="📬 Кинуть заявку на А/П")
+async def send_ap_request(message: Message):
+    if message.from_id != message.peer_id:
+        return
+    
+    await message.answer(
+        "📬 **Подача заявки на А/П**\n\n"
+        "🔗 Ссылка для подачи заявки:\n"
+        "https://forum.blackrussia.online/forums/Агенты-поддержки.3283/\n\n"
+        "📌 **Важно!**\n"
+        "• Заявки могут быть закрыты в любой момент\n"
+        "• Ждите, пока не откроют\n"
+        "• Не флудите в личные сообщения руководству\n\n"
+        "Удачи с заявкой!",
+        keyboard=get_main_menu()
+    )
 
 @bot.on.message()
 async def unknown_handler(message: Message):
