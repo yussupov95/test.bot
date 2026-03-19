@@ -284,21 +284,9 @@ async def zayavka_handler(message: Message):
 
 @bot.on.message(text="📬 Кинуть заявку на А/П")
 async def send_ap_request(message: Message):
-    print(f"🍆 Нажата кнопка: {message.text}")
     if message.from_id != message.peer_id:
         return
-    
-    await message.answer(
-        "📬 **Подача заявки на А/П**\n\n"
-        "🔗 **Ссылка для подачи заявки:**\n"
-        "https://forum.blackrussia.online/forums/Агенты-поддержки.3283/\n\n"
-        "📌 **Важно!**\n"
-        "• Заявки могут быть закрыты в любой момент\n"
-        "• Ждите, пока не откроют\n"
-        "• Не флудите в личные сообщения руководству\n\n"
-        "Удачи с заявкой!",
-        keyboard=get_main_menu()
-    )
+    await message.answer("✅ Тест работает! Кнопка нажата.")
 
 if __name__ == "__main__":
     print("✅ Бот запущен")
