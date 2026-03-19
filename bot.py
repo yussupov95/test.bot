@@ -284,8 +284,10 @@ async def zayavka_handler(message: Message):
 
 @bot.on.message(text="📬 Кинуть заявку на А/П")
 async def send_ap_request(message: Message):
+    print(f"Нажата кнопка: {message.text}")
     if message.from_id != message.peer_id:
         return
+    # остальной код
     
     await message.answer(
         "📬 **Подача заявки на А/П**\n\n"
