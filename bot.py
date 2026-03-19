@@ -1,6 +1,6 @@
 from vkbottle.bot import Bot, Message
 
-TOKEN = "vk1.a.dj9taykSWx_H0bWtjU1U4V1XpqP1ALZEGggvt4nMltvLP6dj1XQ-NReHSSx-fbWd8SWA54CrKUGMmvPGAdbTe-wtMKGDJDATJnLnrte523MeA8iGKB4BV4Dkgvm5zZMJlx9tcYF-TqOw4_VeowZjGMJ9Kzc4emidfmD-FT97JYN-_Ezxbav_TiHOu8I_8aqLqeHdVWiPhFlezpxzzJmIvg"
+TOKEN = "vk1.a.DGzfRe7hrfmAZOc6ltV4CHYSU1fWY9jaPLkT66oRPTz_NZqzpu2aT6XKfKKubBDZX_1ujYWy1F1n7bguLHvRsaL-YRTkYYR1FbkwheRjprJbJeQG1oMg8V-3aVaZ81plv_WMhMzS7wOCOyIRRRgqxlFFdm0gRJmN0jazvJho0UEJJgcfCdG8ssDtfqe_JiVx8vUnWt9UDhf4lCH66ndSSg"
 
 bot = Bot(token=TOKEN)
 
