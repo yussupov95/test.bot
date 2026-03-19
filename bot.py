@@ -299,15 +299,6 @@ async def send_ap_request(message: Message):
         keyboard=get_main_menu()
     )
 
-@bot.on.message()
-async def unknown_handler(message: Message):
-    if message.from_id != message.peer_id:
-        return
-    await message.answer(
-        "Нажми «Начать» для начала работы",
-        keyboard=get_main_menu()
-    )
-
 if __name__ == "__main__":
     print("✅ Бот запущен")
     bot.run_forever()           
