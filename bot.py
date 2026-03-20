@@ -4,7 +4,7 @@ import json
 import os
 from datetime import datetime
 
-TOKEN = "vk1.a.DGzfRe7hrfmAZOc6ltV4CHYSU1fWY9jaPLkT66oRPTz_NZqzpu2aT6XKfKKubBDZX_1ujYWy1F1n7bguLHvRsaL-YRTkYYR1FbkwheRjprJbJeQG1oMg8V-3aVaZ81plv_WMhMzS7wOCOyIRRRgqxlFFdm0gRJmN0jazvJho0UEJJgcfCdG8ssDtfqe_JiVx8vUnWt9UDhf4lCH66ndSSg"
+TOKEN = "vk1.a.yk6CrpiXV0IirGWRG4bKbnDkQtSssCcHNo7UuD4S938IpdCvEhRc2PosDHQmEvsQX83RtuGB4na3ycHVwUWcOxw76fgIzOaRGjsYaD96EuGaoGpZkbG10qEMjFixdcRcc9r6nIvHRwml2FUXXNqrSQsqA5A5tN0gdCeka4FsvoZZQF0lFbvdFl6ho8YeVFr_2RXKNiNy2GNgv5b3XYkHxg"
 
 bot = Bot(token=TOKEN)
 
@@ -21,7 +21,7 @@ def get_main_menu():
     keyboard.row()
     keyboard.add(Text("📋 Руководство А/П"), color=KeyboardButtonColor.SECONDARY)
     keyboard.row()
-    keyboard.add(Text("📬 Кинуть заявку на А/П"), color=KeyboardButtonColor.PRIMARY)
+    keyboard.add(Text("📖 Кинуть заявку на А/П"), color=KeyboardButtonColor.PRIMARY)
     return keyboard
 
 def get_study_menu():
@@ -39,6 +39,22 @@ def get_study_menu():
     keyboard.row()
     keyboard.add(Text("← Назад"), color=KeyboardButtonColor.SECONDARY)
     return keyboard
+
+@bot.on.message(text="📖 Кинуть заявку на А/П")
+async def send_ap_request(message: Message):
+    if message.from_id != message.peer_id:
+        return
+    await message.answer(
+        "📬 **Подача заявки на А/П**\n\n"
+        "🔗 **Ссылка для подачи заявки:**\n"
+        "https://forum.blackrussia.online/forums/Агенты-поддержки.3283/\n\n"
+        "📌 **Важно!**\n"
+        "• Заявки могут быть закрыты в любой момент\n"
+        "• Ждите, пока не откроют\n"
+        "• Не флудите в личные сообщения руководству\n\n"
+        "Удачи с заявкой!",
+        keyboard=get_main_menu()
+    )
 
 @bot.on.message(text=["Начать", "start", "начать"])
 async def start_handler(message: Message):
@@ -281,10 +297,7 @@ async def zayavka_handler(message: Message):
         )
         
         del user_data[user_id]
-
-@bot.on.message(text="📬 Кинуть заявку на А/П")
-async def send_ap_request(message: Message):
-    await message.answer("✅ Работает")
+        
 
 if __name__ == "__main__":
     print("✅ Бот запущен")
