@@ -12,6 +12,7 @@ APPLICATIONS_FILE = "applications.json"
 ADMIN_IDS = [609908758, 1043667113, 697274681]
 
 user_data = {}
+user_questions = {}  # {user_id: {"step": 1, "nickname": "", "question": ""}}
 
 def get_main_menu():
     keyboard = Keyboard(one_time=False, inline=False)
@@ -23,6 +24,7 @@ def get_main_menu():
     keyboard.row()
     keyboard.add(Text("📖 Кинуть заявку на А/П"), color=KeyboardButtonColor.PRIMARY)
     keyboard.row()
+    keyboard.add(Text("📩 Задать вопрос руководству"), color=KeyboardButtonColor.PRIMARY)
     keyboard.add(Text("❓ Популярные вопросы"), color=KeyboardButtonColor.NEGATIVE)
     return keyboard
 
@@ -409,8 +411,73 @@ async def zayavka_handler(message: Message):
         )
         
         del user_data[user_id]
-        
 
+@bot.on.message(text="📩 Задать вопрос руководству")
+async def ask_question_start(message: Message):
+    if message.from_id != message.peer_id:
+        return
+    
+    user_id = message.from_id
+    user_questions[user_id] = {"step": 1, "nickname": "", "question": ""}
+    
+    await message.answer(
+        "📩 **Задать вопрос руководству**\n\n"
+        "Шаг 1 из 2\n\n"
+        "Введите ваш **NickName**:"
+    )
+
+@bot.on.message()
+async def question_handler(message: Message):
+    if message.from_id != message.peer_id:
+        return
+    
+    user_id = message.from_id
+    if user_id not in user_questions:
+        return
+    
+    text = message.text.strip()
+    step = user_questions[user_id]["step"]
+    
+    if step == 1:
+        user_questions[user_id]["nickname"] = text
+        user_questions[user_id]["step"] = 2
+        await message.answer(
+            "Шаг 2 из 2\n\n"
+            "Напишите ваш **вопрос**:"
+        )
+    
+    elif step == 2:
+        user_questions[user_id]["question"] = text
+        
+        nickname = user_questions[user_id]["nickname"]
+        question = user_questions[user_id]["question"]
+        
+        result = f"📩 **Новый вопрос от игрока**\n\n"
+        result += f"👤 **NickName:** {nickname}\n"
+        result += f"🆔 **ID:** {user_id}\n"
+        result += f"❓ **Вопрос:** {question}\n\n"
+        result += f"🔗 Профиль: https://vk.com/id{user_id}"
+        
+        # Отправляем всем админам
+        for admin_id in ADMIN_IDS:
+            try:
+                await bot.api.messages.send(
+                    peer_id=admin_id,
+                    message=result,
+                    random_id=0
+                )
+            except:
+                print(f"Не удалось отправить админу {admin_id}")
+        
+        await message.answer(
+            "✅ **Ваш вопрос отправлен!**\n\n"
+            "Руководство ответит вам в ближайшее время.",
+            keyboard=get_main_menu()
+        )
+        
+        del user_questions[user_id]
+        
+        
 if __name__ == "__main__":
     print("✅ Бот запущен")
     bot.run_forever()           
