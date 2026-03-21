@@ -22,6 +22,8 @@ def get_main_menu():
     keyboard.add(Text("📋 Руководство А/П"), color=KeyboardButtonColor.SECONDARY)
     keyboard.row()
     keyboard.add(Text("📖 Кинуть заявку на А/П"), color=KeyboardButtonColor.PRIMARY)
+    keyboard.row()
+    keyboard.add(Text("❓ Популярные вопросы"), color=KeyboardButtonColor.NEGATIVE)
     return keyboard
 
 def get_study_menu():
@@ -36,6 +38,25 @@ def get_study_menu():
     keyboard.add(Text("⚙️ Команды сервера"), color=KeyboardButtonColor.PRIMARY)
     keyboard.row()
     keyboard.add(Text("📖 РП Термины"), color=KeyboardButtonColor.PRIMARY)
+    keyboard.row()
+    keyboard.add(Text("🔒 Защита игрового аккаунта"), color=KeyboardButtonColor.PRIMARY)
+    keyboard.row()
+    keyboard.add(Text("← Назад"), color=KeyboardButtonColor.SECONDARY)
+    return keyboard
+
+def get_faq_menu():
+    keyboard = Keyboard(one_time=False, inline=False)
+    keyboard.add(Text("1️⃣ Когда откроют заявки на А/П"), color=KeyboardButtonColor.PRIMARY)
+    keyboard.row()
+    keyboard.add(Text("2️⃣ Когда проверят анкету на К/А"), color=KeyboardButtonColor.PRIMARY)
+    keyboard.row()
+    keyboard.add(Text("3️⃣ Требования для поступления на А/П"), color=KeyboardButtonColor.PRIMARY)
+    keyboard.row()
+    keyboard.add(Text("4️⃣ Кто такой А/П"), color=KeyboardButtonColor.PRIMARY)
+    keyboard.row()
+    keyboard.add(Text("5️⃣ Кто такой К/А"), color=KeyboardButtonColor.PRIMARY)
+    keyboard.row()
+    keyboard.add(Text("6️⃣ Когда проверят заявки на Доп-баллы"), color=KeyboardButtonColor.PRIMARY)
     keyboard.row()
     keyboard.add(Text("← Назад"), color=KeyboardButtonColor.SECONDARY)
     return keyboard
@@ -64,6 +85,97 @@ async def start_handler(message: Message):
         "👋 Добро пожаловать в бот подачи заявок!\n\n"
         "Выберите нужный раздел:",
         keyboard=get_main_menu()
+    )
+
+@bot.on.message(text="❓ Популярные вопросы")
+async def faq_menu_handler(message: Message):
+    if message.from_id != message.peer_id:
+        return
+    await message.answer(
+        "❓ **Популярные вопросы**\n\n"
+        "Выберите интересующий вас вопрос:",
+        keyboard=get_faq_menu()
+    )
+
+@bot.on.message(text="🔒 Защита игрового аккаунта")
+async def account_security_handler(message: Message):
+    if message.from_id != message.peer_id:
+        return
+    await message.answer(
+        "🔒 **Защита игрового аккаунта**\n\n"
+        "🔗 Подробнее о защите аккаунта:\n"
+        "https://vk.com/away.php?to=https%3A%2F%2Fforum.blackrussia.online%2Fthreads%2Fgrozny-%25D0%2597%25D0%25B0%25D1%2589%25D0%25B8%25D1%2582%25D0%25B0-%25D0%25B8%25D0%25B3%25D1%2580%25D0%25BE%25D0%25B2%25D0%25BE%25D0%25B3%25D0%25BE-%25D0%25B0%25D0%25BA%25D0%25BA%25D0%25B0%25D1%2583%25D0%25BD%25D1%2582%25D0%25B0.14640664%2F&utf=1/\n\n"
+        "Обязательно ознакомьтесь!",
+        keyboard=get_study_menu()
+    )
+
+@bot.on.message(text="1️⃣ Когда откроют заявки на А/П")
+async def q1_handler(message: Message):
+    if message.from_id != message.peer_id:
+        return
+    await message.answer(
+        "📢 **Когда откроют заявки на А/П**\n\n"
+        "О точной дате открытия заявок будет сообщено дополнительно.\n"
+        "Следите за объявлениями в беседе и на форуме.",
+        keyboard=get_faq_menu()
+    )
+
+@bot.on.message(text="2️⃣ Когда проверят анкету на К/А")
+async def q2_handler(message: Message):
+    if message.from_id != message.peer_id:
+        return
+    await message.answer(
+        "📋 **Когда проверят анкету на К/А**\n\n"
+        "Анкеты проверяются в течение 1-3 рабочих дней.\n"
+        "О результате вам сообщат в личные сообщения.",
+        keyboard=get_faq_menu()
+    )
+
+@bot.on.message(text="3️⃣ Требования для поступления на А/П")
+async def q3_handler(message: Message):
+    if message.from_id != message.peer_id:
+        return
+    await message.answer(
+        "📌 **Требования для поступления на А/П**\n\n"
+        "• Возраст от 15 лет\n"
+        "• Знание правил сервера и команд\n"
+        "• Отсутствие серьезных нарушений\n"
+        "Подробнее в разделе «Что учить для А/П».",
+        keyboard=get_faq_menu()
+    )
+
+@bot.on.message(text="4️⃣ Кто такой А/П")
+async def q4_handler(message: Message):
+    if message.from_id != message.peer_id:
+        return
+    await message.answer(
+        "👥 **Кто такой А/П (Агент Поддержки)**\n\n"
+        "Агент поддержки — это игрок, который помогает новичкам,\n"
+        "отвечает на вопросы в чате и следит за порядком.\n\n"
+        "Агенты являются первым звеном поддержки игроков.",
+        keyboard=get_faq_menu()
+    )
+
+@bot.on.message(text="5️⃣ Кто такой К/А")
+async def q5_handler(message: Message):
+    if message.from_id != message.peer_id:
+        return
+    await message.answer(
+        "👤 **Кто такой К/А (Кандидат в Администраторы)**\n\n"
+        "Кандидат — это игрок, который подал заявку на должность Администратора\n"
+        "и находится на стадии обзвона.",
+        keyboard=get_faq_menu()
+    )
+
+@bot.on.message(text="6️⃣ Когда проверят заявки на Доп-баллы")
+async def q6_handler(message: Message):
+    if message.from_id != message.peer_id:
+        return
+    await message.answer(
+        "⭐ **Когда проверят заявки на Доп-баллы**\n\n"
+        "Заявки на дополнительные баллы проверяются 1-2 раза в неделю.\n"
+        "О результатах сообщается в Инфо чате.",
+        keyboard=get_faq_menu()
     )
 
 @bot.on.message(text="📚 Что учить для А/П")
